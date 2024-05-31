@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <form id="myform"
+        action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DD4000000HsA2"
+        method="POST" onsubmit="return validarFormulario();">
+        <input type="hidden" name="oid" value="00DD4000000HsA2">
+        <input type="hidden" name="retURL" value="http://">
+
+        <!-- Seus campos de entrada aqui -->
+        <div class="positionLogo">
+            <img src="./Logo-so-Galmo-preta.png" alt="" class="imageLogo">
+        </div>
+
+        <div class="teste">
+            <div class="inputBox">
+                <input id="first_name" maxlength="40" name="first_name" size="20" type="text" class="inputUser"
+                    required />
+                <label for="first_name" class="labelInput">Primeiro Nome</label>
+
+            </div>
+
+            <div class="inputBox">
+                <input id="last_name" maxlength="80" name="last_name" size="20" type="text" class="inputUser"
+                    required />
+                <label for="last_name" class="labelInput">Sobrenome</label>
+            </div>
+
+            <div class="inputBox">
+                <input id="email" maxlength="80" name="email" size="20" type="text" onkeyup="validarEmail()"
+                    class="inputUser" required />
+                <label for="email" class="labelInput">Email</label>
+            </div>
+
+            <div class="inputBox">
+                <input id="mobile" maxlength="40" name="mobile" size="10" type="number" class="inputUser" required />
+                <label for="mobile" class="labelInput">Celular</label>
+            </div>
+
+            <div class="inputBox">
+                <label for="" class="labelInput"></label>
+                <select id="00ND400000AkFBV" name="00ND400000AkFBV" title="Empreendimento de Interesse"
+                    class="selectUser" required>
+                    <option value="-- Empreendimento de Interesse: --">Selecione Empreendimento de Interesse</option>
+                    <option value="Galmo">Galmo</option>
+                    <option value="WhatsApp">Elera</option>
+                    <option value="Totalita">Totalita</option>
+                    <option value="Catalunya">Catalunya</option>
+                </select>
+            </div>
+
+            <div class="inputBox">
+                <label for="service_channel" class="labelInput"></label>
+                <select id="00ND400000AdaH1" name="00ND400000AdaH1" title="Canal de Atendimento" class="selectUser"
+                    required>
+                    <option value="-- Canal de Atendimento: --" id="canalAtendimento">Selecione Canal de Atendimento
+                    </option>
+                    <option value="Fale conosco">Fale conosco</option>
+                    <option value="Chat">Chat</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Telefone">Telefone</option>
+                    <option value="Loja">Loja</option>
+                    <option value="Stand">Stand</option>
+                </select>
+            </div>
+
+            <div class="inputBox">
+                <label for="lead_source" class="labelInput"></label>
+                <select id="lead_source" name="lead_source" class="selectUser" required>
+                    <option value="-- Origem do lead --" id="origemLead">Selecione Origem do lead</option>
+                    <option value="Outdoor">Outdoor</option>
+                    <option value="radio">Rádio</option>
+                    <option value="Televisão">Televisão</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Publicações">Publicações</option>
+                    <option value="Twitter">Twitter</option>
+                    <option value="Facebook Ads">Facebook Ads</option>
+                    <option value="Wi-Fi">Wi-Fi</option>
+                    <option value="Site GALMO">Site GALMO</option>
+                    <option value="Landing Page">Landing Page</option>
+                    <option value="TikTok">TikTok</option>
+                    <option value="Youtube">Youtube</option>
+                    <option value="Tapume">Tapume</option>
+                    <option value="Anúncio de Loja">Anúncio de Loja</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="button">
+            <input type="submit" name="submit" id="submit" value="Enviar">
+        </div>
+    </form>
+</body>
+
+</html>
+<script>
+    function validarFormulario() {
+        var primeiroNome = document.getElementById('first_name').value;
+        var sobrenome = document.getElementById('last_name').value;
+        var email = document.getElementById('email').value;
+        var celular = document.getElementById('mobile').value;
+        var empreendimento = document.getElementById('00ND400000AkFBV').value;
+        var canalAtendimento = document.getElementById('00ND400000AdaH1').value;
+        var origemLead = document.getElementById('lead_source').value;
+
+        // Adicione suas validações aqui. Por exemplo:
+        if (primeiroNome == "" || sobrenome == "" || email == "" || celular == "" || empreendimento == "" || canalAtendimento == "" || origemLead == "") {
+            Swal.fire({
+                icon: "error",
+                title: "Erro",
+                text: "Por favor, preencha todos os campos.",
+                confirmButtonColor: '#2c2c2c',
+                background: '#f0f0f0',
+                iconColor: '#000000',
+                timer: 10000
+            });
+            return false;
+        }
+
+        // Validação de nome e sobrenome
+        var regexNome = /^[A-Za-z]+$/;
+        if (!regexNome.test(primeiroNome) || !regexNome.test(sobrenome)) {
+            Swal.fire({
+                icon: "error",
+                title: "Erro",
+                text: "Nome e sobrenome devem conter apenas letras",
+                confirmButtonColor: '#2c2c2c',
+                background: '#f0f0f0',
+                iconColor: '#000000',
+                timer: 10000
+            });
+            return false;
+        }
+
+        if (celular.length > 11) {
+            Swal.fire({
+                icon: "error",
+                title: "Erro",
+                text: "O número de celular deve ter até 11 dígitos",
+                confirmButtonColor: '#2c2c2c',
+                background: '#f0f0f0',
+                iconColor: '#000000',
+                timer: 10000
+            });
+            return false;
+        }
+
+        // Validação de email
+        var regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.com)?$/i;
+        if (!regexEmail.test(email)) {
+            Swal.fire({
+                icon: "error",
+                title: "Erro",
+                text: "Email inválido, deve conter '.com'",
+                confirmButtonColor: '#2c2c2c',
+                background: '#f0f0f0',
+                iconColor: '#000000',
+                timer: 10000
+            });
+            return false;
+        }
+
+        enviarSalesforce();
+        return true;
+    }
+
+    function enviarSalesforce() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Cadastro realizado com sucesso!',
+            text: 'Seu cadastro foi realizado com sucesso.',
+            confirmButtonColor: '#2c2c2c',
+            background: '#f0f0f0',
+            iconColor: '#000000',
+            timer: 10000
+        });
+    }
+</script>
